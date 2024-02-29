@@ -56,3 +56,40 @@ console.log(extractNumber('а я томат'));
 console.log(extractNumber(2023));
 console.log(extractNumber(-1));
 console.log(extractNumber(1.5));
+
+
+/*!// !------------ 5.16. Функции возвращаются ------------! //!*/
+
+// домашнее задание - 5.16 Функции возвращаются
+
+//@ функция переводит сроку времени типа 08:15 в десятичный формат в часы типа 8.25
+const decimalizeTime = (time) => {
+    const timeArr = time.split(':');
+    const decimalTime = Number(timeArr[0]) + Number(timeArr[1] / 60);
+    return decimalTime;
+}
+
+const checkTimeOverlap = (dayStart, dayEnd, meetingStart, meetingDuration) => {
+    const meetingEnd = decimalizeTime(meetingStart) + meetingDuration / 60;
+
+    if (decimalizeTime(dayStart) <= decimalizeTime(meetingStart) && meetingEnd <= decimalizeTime(dayEnd)) {
+        return true
+    }
+    return false;
+}
+
+
+//# проверки
+const times = [
+    ['09:00', '18:00', '10:0', 120],
+    ['08:00', '17:00', '07:0', 120],
+    ['7:00', '19:0', '17:0', 180],
+    ['6:0', '15:00', '05:0', 60],
+    ['8:00', '15:00', '16:0', 120],
+    ['07:00', '15:00', '6:0', 720],
+    ['08:0', '15:00', '8:0', 480],
+    ['7:00', '15:00', '6:0', 560],
+]
+for (let time of times) {
+    console.log(checkTimeOverlap(...time));
+}
